@@ -9,5 +9,7 @@ dependencies {
 
     compile 'org.springframework.boot:spring-boot-devtools'
 
+    compile "org.axonframework:axon-core:${axonVersion}"
+
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
