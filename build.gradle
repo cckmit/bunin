@@ -1,0 +1,47 @@
+
+buildscript {
+
+    ext.dependencyPluginVersion = '1.0.4.RELEASE'
+    ext.springBootVersion = '1.5.9.RELEASE'
+
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:${dependencyPluginVersion}"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
+}
+
+group 'my.bunin'
+version '1.0-SNAPSHOT'
+
+allprojects {
+    ext.springBootVersion = '1.5.9.RELEASE'
+
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'idea'
+
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'org.springframework.boot'
+
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+        }
+    }
+
+    repositories {
+        mavenLocal()
+        jcenter()
+    }
+
+}
+
