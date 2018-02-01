@@ -6,10 +6,30 @@ configurations {
 dependencies {
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-undertow'
+    compile 'org.springframework.boot:spring-boot-starter-jersey'
 
     compile 'org.springframework.boot:spring-boot-devtools'
 
-    compile "org.axonframework:axon-core:${axonVersion}"
+    compile 'org.springframework.boot:spring-boot-starter-cache'
+
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+    compile 'mysql:mysql-connector-java'
+    compile 'com.zaxxer:HikariCP'
+    compile 'org.hibernate:hibernate-java8'
+
+    compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compile 'org.springframework.boot:spring-boot-starter-data-redis'
+
+//    compile "org.axonframework:axon-core:${axonVersion}"
+//    compile "org.axonframework:axon-spring-boot-autoconfigure:${axonVersion}"
+//    compile "org.axonframework:axon-mongo:${axonVersion}"
+
+    compile 'org.projectlombok:lombok'
+
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-guava'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 }
