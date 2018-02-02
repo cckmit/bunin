@@ -38,6 +38,10 @@ allprojects {
         }
     }
 
+    dependencies {
+        compile 'org.projectlombok:lombok'
+    }
+
     repositories {
         mavenLocal()
         jcenter()

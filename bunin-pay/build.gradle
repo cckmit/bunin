@@ -4,6 +4,8 @@ configurations {
 }
 
 dependencies {
+    compile project(':bunin-core')
+
     compile 'org.springframework.boot:spring-boot-starter-web'
     compile 'org.springframework.boot:spring-boot-starter-undertow'
     compile 'org.springframework.boot:spring-boot-starter-jersey'
@@ -23,8 +25,6 @@ dependencies {
 //    compile "org.axonframework:axon-core:${axonVersion}"
 //    compile "org.axonframework:axon-spring-boot-autoconfigure:${axonVersion}"
 //    compile "org.axonframework:axon-mongo:${axonVersion}"
-
-    compile 'org.projectlombok:lombok'
 
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda'

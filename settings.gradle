@@ -1,3 +1,4 @@
 rootProject.name = 'bunin'
 include 'bunin-pay'
+include 'bunin-core'
 
