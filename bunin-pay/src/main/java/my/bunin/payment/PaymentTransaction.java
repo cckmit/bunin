@@ -1,4 +1,4 @@
-package my.bunin.pay.payment;
+package my.bunin.payment;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,3 +1,25 @@
 
 dependencies {
+    compile 'org.projectlombok:lombok'
+    compile 'ch.qos.logback:logback-classic'
+    compile 'org.slf4j:jcl-over-slf4j'
+    compile 'org.slf4j:jul-to-slf4j'
+    compile 'org.slf4j:log4j-over-slf4j'
+
+    compile 'commons-codec:commons-codec'
+    compile 'commons-beanutils:commons-beanutils'
+    compile 'com.google.guava:guava'
+
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-guava'
+
+    compile "org.bouncycastle:bcpkix-jdk15on:${bouncycastleVersion}"
+    compile "org.bouncycastle:bcmail-jdk15on:${bouncycastleVersion}"
+    compile "org.bouncycastle:bcpg-jdk15on:${bouncycastleVersion}"
+    compile "org.bouncycastle:bctls-jdk15on:${bouncycastleVersion}"
+    compile "org.bouncycastle:bcprov-ext-jdk15on:${bouncycastleVersion}"
+
+    testCompile 'junit:junit'
 }

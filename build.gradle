@@ -19,6 +19,8 @@ version '1.0-SNAPSHOT'
 
 allprojects {
     ext.axonVersion = '3.1.2'
+    ext.bouncycastleVersion = '1.59'
+    ext.codecVersion = '1.11'
     ext.springBootVersion = '1.5.9.RELEASE'
 
     apply plugin: 'java'
@@ -36,10 +38,6 @@ allprojects {
         imports {
             mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
         }
-    }
-
-    dependencies {
-        compile 'org.projectlombok:lombok'
     }
 
     repositories {
