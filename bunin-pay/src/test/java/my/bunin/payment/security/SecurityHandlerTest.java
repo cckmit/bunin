@@ -2,7 +2,6 @@ package my.bunin.payment.security;
 
 import lombok.extern.slf4j.Slf4j;
 import my.bunin.merchant.MerchantSecret;
-import my.bunin.payment.endpoint.bean.Crypt;
 import my.bunin.util.SecurityUtils;
 import org.junit.Assert;
 import org.junit.Test;

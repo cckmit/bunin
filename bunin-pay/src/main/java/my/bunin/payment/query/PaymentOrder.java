@@ -1,4 +1,4 @@
-package my.bunin.payment;
+package my.bunin.payment.query;
 
 import lombok.Getter;
 import lombok.Setter;

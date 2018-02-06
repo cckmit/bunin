@@ -23,8 +23,8 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
 
 //    compile "org.axonframework:axon-core:${axonVersion}"
-//    compile "org.axonframework:axon-spring-boot-autoconfigure:${axonVersion}"
-//    compile "org.axonframework:axon-mongo:${axonVersion}"
+    compile "org.axonframework:axon-spring-boot-autoconfigure:${axonVersion}"
+    compile "org.axonframework:axon-mongo:${axonVersion}"
 
     compile 'javax.validation:validation-api'
 

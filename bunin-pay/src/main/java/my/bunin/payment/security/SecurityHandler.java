@@ -2,7 +2,6 @@ package my.bunin.payment.security;
 
 import my.bunin.merchant.MerchantSecret;
 import my.bunin.merchant.MerchantService;
-import my.bunin.payment.endpoint.bean.Crypt;
 import my.bunin.util.SecurityUtils;
 import my.bunin.util.StringUtils;
 import org.apache.commons.codec.binary.Base64;
@@ -22,6 +21,19 @@ public class SecurityHandler {
 
     public SecurityHandler(MerchantService merchantService) {
         this.merchantService = merchantService;
+    }
+
+    public Crypt generate(String merchantNo, String message, String cryptKey, String signature) {
+        Crypt crypt = new Crypt();
+        crypt.setMerchantNo(merchantNo);
+        crypt.setMessage(message);
+        crypt.setCryptKey(cryptKey);
+        crypt.setSignature(signature);
+        return crypt;
+    }
+
+    public Crypt verifyAndDecrypt(Crypt crypt) throws GeneralSecurityException {
+        return verifyAndDecrypt(crypt, null);
     }
 
     public Crypt verifyAndDecrypt(Crypt crypt, MerchantSecret merchantSecret) throws GeneralSecurityException {

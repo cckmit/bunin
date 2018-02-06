@@ -1,4 +1,4 @@
-package my.bunin.payment.endpoint.bean;
+package my.bunin.payment.security;
 
 import lombok.Data;
 import lombok.Getter;
