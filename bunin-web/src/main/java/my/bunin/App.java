@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableAutoConfiguration
-public class PayApp {
+public class App {
     public static void main(String[] args) {
-        SpringApplication.run(PayApp.class, args);
+        SpringApplication.run(App.class, args);
     }
 }

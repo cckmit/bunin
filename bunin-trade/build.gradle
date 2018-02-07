@@ -6,12 +6,6 @@ configurations {
 dependencies {
     compile project(':bunin-core')
 
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-undertow'
-    compile 'org.springframework.boot:spring-boot-starter-jersey'
-
-    compile 'org.springframework.boot:spring-boot-devtools'
-
     compile 'org.springframework.boot:spring-boot-starter-cache'
 
     compile 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -26,7 +20,8 @@ dependencies {
     compile "org.axonframework:axon-spring-boot-autoconfigure:${axonVersion}"
     compile "org.axonframework:axon-mongo:${axonVersion}"
 
-    compile 'javax.validation:validation-api'
+//    compile 'javax.validation:validation-api'
+    compile 'org.hibernate:hibernate-validator'
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile "org.axonframework:axon-test:${axonVersion}"

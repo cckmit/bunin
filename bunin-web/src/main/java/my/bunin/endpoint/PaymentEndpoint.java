@@ -1,4 +1,4 @@
-package my.bunin.payment.endpoint;
+package my.bunin.endpoint;
 
 import lombok.extern.slf4j.Slf4j;
 import my.bunin.payment.security.Crypt;

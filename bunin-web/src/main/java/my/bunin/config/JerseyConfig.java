@@ -1,6 +1,6 @@
-package my.bunin;
+package my.bunin.config;
 
-import my.bunin.payment.endpoint.PaymentEndpoint;
+import my.bunin.endpoint.PaymentEndpoint;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.server.ServerProperties;
 import org.springframework.stereotype.Component;
