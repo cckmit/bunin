@@ -1,4 +1,4 @@
-package my.bunin;
+package my.bunin.trade.config;
 
 import my.bunin.trade.order.OrderAggregate;
 import my.bunin.trade.order.OrderCommandHandler;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 
 @Configuration
-public class EventSourcingConfig {
+public class OrderAutoConfiguration {
 
     @Resource
     private EventBus eventBus;

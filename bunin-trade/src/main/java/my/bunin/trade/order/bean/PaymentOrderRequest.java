@@ -1,4 +1,4 @@
-package my.bunin.trade.order;
+package my.bunin.trade.order.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package my.bunin.trade.order;
+package my.bunin.trade.order.bean;
 
 public class IdentityOrderRequest {
 }

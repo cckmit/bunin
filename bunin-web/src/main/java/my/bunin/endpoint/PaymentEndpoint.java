@@ -1,6 +1,7 @@
 package my.bunin.endpoint;
 
 import lombok.extern.slf4j.Slf4j;
+import my.bunin.trade.order.api.ConfirmOrderCommand;
 import my.bunin.trade.security.Crypt;
 import my.bunin.trade.security.SecurityHandler;
 import my.bunin.trade.order.api.CreateOrderCommand;
@@ -36,11 +37,21 @@ public class PaymentEndpoint {
     public Response createOrder(@Valid CreateOrderCommand command) {
         log.info("create order request: {}", command);
 
-        new CreateOrderCommand(command.getOrderNo(), command.getMerchantNo(), command.getAmount());
         command.setId(UUID.randomUUID().toString());
         gateway.send(command);
         return Response.ok("{\"code\":\"succeed\"}").build();
     }
+
+    @POST
+    @Path("confirmOrder")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response confirmOrder(@Valid ConfirmOrderCommand command) {
+        log.info("confirm order request: {}", command);
+        gateway.send(command);
+        return Response.ok("{\"code\":\"succeed\"}").build();
+    }
+
 
     @POST
     @Path("order")

@@ -1,4 +1,4 @@
-package my.bunin.trade.order.service;
+package my.bunin.trade.order;
 
 import org.springframework.stereotype.Service;
 

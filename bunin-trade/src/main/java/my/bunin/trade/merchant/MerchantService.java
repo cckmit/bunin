@@ -1,5 +1,6 @@
 package my.bunin.trade.merchant;
 
+import my.bunin.trade.merchant.query.MerchantSecret;
 import my.bunin.util.SecurityUtils;
 import org.springframework.stereotype.Service;
 

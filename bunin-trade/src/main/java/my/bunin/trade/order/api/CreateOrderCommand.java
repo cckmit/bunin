@@ -7,7 +7,6 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@AllArgsConstructor
 public class CreateOrderCommand extends AbstractCommand{
 
     private String orderNo;

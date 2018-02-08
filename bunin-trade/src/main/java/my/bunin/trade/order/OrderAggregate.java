@@ -38,8 +38,7 @@ public class OrderAggregate {
 
     public void execute(ExecuteOrderCommand command) {
         log.info("order aggregate execute order command: {}", command);
-        apply(new OrderExecutedEvent(command.getId(), command.getOrderNo(),
-                command.getMerchantNo(), command.getAmount()));
+        apply(new OrderExecutedEvent(id, orderNo, merchantNo, amount));
     }
 
     @EventSourcingHandler
@@ -51,5 +50,12 @@ public class OrderAggregate {
         this.amount = event.getAmount();
         this.status = "CREATED";
     }
+
+    @EventSourcingHandler
+    public void on(OrderExecutedEvent event) {
+        log.info("order aggregate order executed event: {}", event);
+        this.status = "PROCESSING";
+    }
+
 
 }

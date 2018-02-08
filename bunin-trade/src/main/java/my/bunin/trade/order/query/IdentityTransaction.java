@@ -8,15 +8,14 @@ import my.bunin.core.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = "identity_order", uniqueConstraints = @UniqueConstraint(columnNames = {"order_no", "merchant_no"}))
-public class IdentityOrder {
+@Table(name = "identity_transaction",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"serial_no", "merchant_no", "channel_no"}))
+public class IdentityTransaction {
 
     @Id
     @GeneratedValue
@@ -25,15 +24,21 @@ public class IdentityOrder {
     @Version
     private Long version;
 
-    @Column(name = "order_no", length = 64, nullable = false)
-    private String orderNo;
+    @ManyToOne
+    @JoinColumn(name = "order_id", nullable = false)
+    private IdentityOrder order;
+
+    @Column(name = "serial_no", length = 64, nullable = false)
+    private String serialNo;
 
     @Column(name = "merchant_no", length = 64, nullable = false)
     private String merchantNo;
 
-    @Enumerated(EnumType.STRING)
+    @Column(name = "channel_no", length = 64)
+    private String channel_no;
+
     @Column(name = "channel_type", length = 64)
-    private ChannelType channelType;
+    private String channelType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "authentication_type", length = 64, nullable = false)
@@ -49,9 +54,6 @@ public class IdentityOrder {
     @Enumerated(EnumType.STRING)
     @Column(name = "account_type", length = 64, nullable = false)
     private AccountType accountType;
-
-    @Column(name = "order_time", nullable = false)
-    private LocalDateTime orderTime;
 
     @Column(name = "execute_time")
     private LocalDateTime executeTime;
@@ -70,16 +72,13 @@ public class IdentityOrder {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 64, nullable = false)
-    private OrderStatus status;
+    private TransactionStatus status;
 
     @Column
     private String code;
 
     @Column
     private String message;
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
-    private Set<IdentityTransaction> transactions = new HashSet<>();
 
     private transient String bankAcronym;
 

@@ -1,6 +1,6 @@
-package my.bunin.trade.order.service;
+package my.bunin.trade.order;
 
-import my.bunin.trade.order.PaymentOrderRequest;
+import my.bunin.trade.order.bean.PaymentOrderRequest;
 import my.bunin.trade.security.Crypt;
 import my.bunin.util.JacksonUtils;
 import org.springframework.stereotype.Service;

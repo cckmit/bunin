@@ -1,6 +1,6 @@
 package my.bunin.trade.security;
 
-import my.bunin.trade.merchant.MerchantSecret;
+import my.bunin.trade.merchant.query.MerchantSecret;
 import my.bunin.trade.merchant.MerchantService;
 import my.bunin.util.SecurityUtils;
 import my.bunin.util.StringUtils;
