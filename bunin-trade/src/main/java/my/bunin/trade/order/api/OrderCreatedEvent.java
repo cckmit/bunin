@@ -1,15 +1,13 @@
 package my.bunin.trade.order.api;
 
-import lombok.*;
+import lombok.Value;
 
 import java.math.BigDecimal;
 
-@Getter
-@Setter
-@ToString(callSuper = true)
-@AllArgsConstructor
-public class CreateOrderCommand extends AbstractCommand{
+@Value
+public class OrderCreatedEvent {
 
+    private String id;
     private String orderNo;
     private String merchantNo;
     private BigDecimal amount;

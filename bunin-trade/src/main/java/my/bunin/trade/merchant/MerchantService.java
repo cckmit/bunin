@@ -1,4 +1,4 @@
-package my.bunin.merchant;
+package my.bunin.trade.merchant;
 
 import my.bunin.util.SecurityUtils;
 import org.springframework.stereotype.Service;

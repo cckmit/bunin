@@ -1,28 +1,45 @@
 package my.bunin.endpoint;
 
 import lombok.extern.slf4j.Slf4j;
-import my.bunin.payment.security.Crypt;
-import my.bunin.payment.security.SecurityHandler;
+import my.bunin.trade.security.Crypt;
+import my.bunin.trade.security.SecurityHandler;
+import my.bunin.trade.order.api.CreateOrderCommand;
+import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.validation.Valid;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.security.GeneralSecurityException;
+import java.util.UUID;
 
 @Slf4j
 @Component
 @Path("payment")
 public class PaymentEndpoint {
 
+    private CommandGateway gateway;
     private SecurityHandler securityHandler;
 
-    public PaymentEndpoint(SecurityHandler securityHandler) {
+    public PaymentEndpoint(SecurityHandler securityHandler,
+                           CommandGateway gateway) {
         this.securityHandler = securityHandler;
+        this.gateway = gateway;
+    }
+
+    @POST
+    @Path("createOrder")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createOrder(@Valid CreateOrderCommand command) {
+        log.info("create order request: {}", command);
+
+        new CreateOrderCommand(command.getOrderNo(), command.getMerchantNo(), command.getAmount());
+        command.setId(UUID.randomUUID().toString());
+        gateway.send(command);
+        return Response.ok("{\"code\":\"succeed\"}").build();
     }
 
     @POST

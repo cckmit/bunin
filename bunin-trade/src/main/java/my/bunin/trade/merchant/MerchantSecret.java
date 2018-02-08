@@ -1,4 +1,4 @@
-package my.bunin.merchant;
+package my.bunin.trade.merchant;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package my.bunin.payment.security;
+package my.bunin.trade.security;
 
 import lombok.Data;
 import lombok.Getter;

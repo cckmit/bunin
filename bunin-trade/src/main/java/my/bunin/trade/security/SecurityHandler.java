@@ -1,7 +1,7 @@
-package my.bunin.payment.security;
+package my.bunin.trade.security;
 
-import my.bunin.merchant.MerchantSecret;
-import my.bunin.merchant.MerchantService;
+import my.bunin.trade.merchant.MerchantSecret;
+import my.bunin.trade.merchant.MerchantService;
 import my.bunin.util.SecurityUtils;
 import my.bunin.util.StringUtils;
 import org.apache.commons.codec.binary.Base64;
