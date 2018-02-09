@@ -1,7 +1,7 @@
 package my.bunin.trade.order;
 
 import lombok.extern.slf4j.Slf4j;
-import my.bunin.trade.order.api.ExecuteOrderCommand;
+import my.bunin.trade.order.api.ExecutePaymentOrderCommand;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.commandhandling.model.Aggregate;
 import org.axonframework.commandhandling.model.Repository;
@@ -19,7 +19,7 @@ public class OrderCommandHandler {
     }
 
     @CommandHandler
-    public void handle(ExecuteOrderCommand command) {
+    public void handle(ExecutePaymentOrderCommand command) {
         Aggregate<OrderAggregate> aggregate = repository.load(command.getId());
         aggregate.execute(orderAggregate -> orderAggregate.execute(command));
     }

@@ -1,10 +1,12 @@
 package my.bunin.endpoint;
 
 import lombok.extern.slf4j.Slf4j;
-import my.bunin.trade.order.api.ConfirmOrderCommand;
+import my.bunin.trade.merchant.MerchantService;
+import my.bunin.trade.merchant.query.MerchantSecret;
+import my.bunin.trade.order.api.ConfirmPaymentOrderCommand;
 import my.bunin.trade.security.Crypt;
-import my.bunin.trade.security.SecurityHandler;
-import my.bunin.trade.order.api.CreateOrderCommand;
+import my.bunin.trade.security.CryptUtils;
+import my.bunin.trade.order.api.CreatePaymentOrderCommand;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
@@ -22,11 +24,12 @@ import java.util.UUID;
 public class PaymentEndpoint {
 
     private CommandGateway gateway;
-    private SecurityHandler securityHandler;
 
-    public PaymentEndpoint(SecurityHandler securityHandler,
+    private MerchantService merchantService;
+
+    public PaymentEndpoint(MerchantService merchantService,
                            CommandGateway gateway) {
-        this.securityHandler = securityHandler;
+        this.merchantService = merchantService;
         this.gateway = gateway;
     }
 
@@ -34,7 +37,7 @@ public class PaymentEndpoint {
     @Path("createOrder")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createOrder(@Valid CreateOrderCommand command) {
+    public Response createOrder(@Valid CreatePaymentOrderCommand command) {
         log.info("create order request: {}", command);
 
         command.setId(UUID.randomUUID().toString());
@@ -46,7 +49,7 @@ public class PaymentEndpoint {
     @Path("confirmOrder")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response confirmOrder(@Valid ConfirmOrderCommand command) {
+    public Response confirmOrder(@Valid ConfirmPaymentOrderCommand command) {
         log.info("confirm order request: {}", command);
         gateway.send(command);
         return Response.ok("{\"code\":\"succeed\"}").build();
@@ -60,10 +63,11 @@ public class PaymentEndpoint {
                           @QueryParam("message") @NotEmpty String message,
                           @QueryParam("cryptKey") @NotEmpty String cryptKey,
                           @QueryParam("signature") @NotEmpty String signature) throws GeneralSecurityException {
-        Crypt crypt = securityHandler.generate(merchantNo, message, cryptKey, signature);
+        Crypt crypt = CryptUtils.generate(merchantNo, message, cryptKey, signature);
 
         log.info("order request: {}", crypt);
-        Crypt decryptedData = securityHandler.verifyAndDecrypt(crypt);
+        MerchantSecret secret = merchantService.getSecret(merchantNo);
+        Crypt decryptedData = CryptUtils.verifyAndDecrypt(crypt, secret);
         return Response.ok(decryptedData).build();
     }
 
@@ -74,7 +78,7 @@ public class PaymentEndpoint {
                             @QueryParam("message") @NotEmpty String message,
                             @QueryParam("cryptKey") @NotEmpty String cryptKey,
                             @QueryParam("signature") @NotEmpty String signature){
-        Crypt crypt = securityHandler.generate(merchantNo, message, cryptKey, signature);
+        Crypt crypt = CryptUtils.generate(merchantNo, message, cryptKey, signature);
 
         log.info("gateway request: {}", crypt);
         return Response.ok(crypt).build();

@@ -19,7 +19,7 @@ public class PaymentTransaction {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
 
     @Version
     private Long version;
@@ -37,8 +37,9 @@ public class PaymentTransaction {
     @Column(name = "channel_no", length = 64, nullable = false)
     private String channelNo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "channel_type", length = 64, nullable = false)
-    private String channelType;
+    private ChannelType channelType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type", length = 64, nullable = false)
@@ -108,5 +109,5 @@ public class PaymentTransaction {
 
     private transient String callbackUrl;
 
-    private transient String redirectUrl;
+    private transient String returnUrl;
 }

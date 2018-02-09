@@ -9,21 +9,15 @@ import org.bouncycastle.util.Strings;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Optional;
 
-@Component
-public class SecurityHandler {
+public class CryptUtils {
 
-    private MerchantService merchantService;
-
-    public SecurityHandler(MerchantService merchantService) {
-        this.merchantService = merchantService;
-    }
-
-    public Crypt generate(String merchantNo, String message, String cryptKey, String signature) {
+    public static Crypt generate(String merchantNo, String message, String cryptKey, String signature) {
         Crypt crypt = new Crypt();
         crypt.setMerchantNo(merchantNo);
         crypt.setMessage(message);
@@ -32,12 +26,7 @@ public class SecurityHandler {
         return crypt;
     }
 
-    public Crypt verifyAndDecrypt(Crypt crypt) throws GeneralSecurityException {
-        return verifyAndDecrypt(crypt, null);
-    }
-
-    public Crypt verifyAndDecrypt(Crypt crypt, MerchantSecret merchantSecret) throws GeneralSecurityException {
-        MerchantSecret secret = Optional.ofNullable(merchantSecret).orElse(merchantService.getSecret(crypt.getMerchantNo()));
+    public static Crypt verifyAndDecrypt(Crypt crypt, MerchantSecret secret) throws GeneralSecurityException {
         PublicKey publicKey = SecurityUtils.getPublicKey(secret.getCipherAlgorithm(), secret.getBase64PublicKey());
         String verifyData = Crypt.MERCHANT_NO + StringUtils.EQUAL + crypt.getMerchantNo() + StringUtils.AMPERSAND
                 + Crypt.MESSAGE + StringUtils.EQUAL + crypt.getMessage() + StringUtils.AMPERSAND
@@ -63,7 +52,7 @@ public class SecurityHandler {
         return crypt;
     }
 
-    public Crypt encryptAndSign(String merchantNo, String data, MerchantSecret secret) throws GeneralSecurityException {
+    public static Crypt encryptAndSign(String merchantNo, String data, MerchantSecret secret) throws GeneralSecurityException {
 
         PrivateKey privateKey = SecurityUtils.getPrivateKey(secret.getCipherAlgorithm(), secret.getBase64PrivateKey());
         SecretKey secretKey = SecurityUtils.getSecretKey(secret.getSecretAlgorithm(), secret.getBase64SecretKey());

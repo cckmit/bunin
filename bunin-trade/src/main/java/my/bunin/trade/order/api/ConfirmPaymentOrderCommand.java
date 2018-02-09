@@ -7,8 +7,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class ConfirmOrderCommand extends AbstractCommand {
+public class ConfirmPaymentOrderCommand extends AbstractPaymentOrderCommand {
 
-    private String orderNo;
-    private String merchantNo;
 }

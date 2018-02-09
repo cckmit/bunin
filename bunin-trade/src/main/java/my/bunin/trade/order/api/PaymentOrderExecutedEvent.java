@@ -5,7 +5,7 @@ import lombok.Value;
 import java.math.BigDecimal;
 
 @Value
-public class OrderCreatedEvent {
+public class PaymentOrderExecutedEvent {
 
     private String id;
     private String orderNo;

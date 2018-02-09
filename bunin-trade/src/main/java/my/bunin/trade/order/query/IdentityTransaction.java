@@ -19,7 +19,7 @@ public class IdentityTransaction {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private String id;
 
     @Version
     private Long version;
@@ -94,5 +94,5 @@ public class IdentityTransaction {
 
     private transient String callbackUrl;
 
-    private transient String redirectUrl;
+    private transient String returnUrl;
 }

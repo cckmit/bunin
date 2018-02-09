@@ -1,46 +1,52 @@
-package my.bunin.trade.order.bean;
+package my.bunin.trade.order.api;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import my.bunin.core.AccountType;
-import my.bunin.core.CertType;
-import my.bunin.core.CurrencyType;
-import my.bunin.core.TransactionType;
-import org.hibernate.validator.constraints.Length;
+import my.bunin.core.*;
+import org.axonframework.commandhandling.TargetAggregateIdentifier;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import static my.bunin.util.JacksonUtils.ISO_DATE_TIME_PATTERN;
-
 @Getter
 @Setter
 @ToString
-public class PaymentOrderRequest {
+public abstract class AbstractPaymentOrderCommand {
+
+    @TargetAggregateIdentifier
+    private String id;
 
     @NotEmpty
-    @Length(max = 64)
     private String orderNo;
 
     @NotEmpty
     private String merchantNo;
 
-    private String channelType;
+    private ChannelType channelType;
 
     @NotNull
     private TransactionType transactionType;
 
     @NotNull
+    private PaymentType paymentType;
+
+    @NotNull
     private BigDecimal amount;
+
+    private BigDecimal accountAmount;
 
     private String accountNo;
 
     @NotNull
     private AccountType accountType;
+
+    private CurrencyType currencyType = CurrencyType.CNY;
+
+    @NotNull
+    private LocalDateTime orderTime;
 
     private String identityNo;
 
@@ -52,17 +58,19 @@ public class PaymentOrderRequest {
 
     private String bankReservedPhone;
 
+    private String targetBankAcronym;
+
+    private String targetBankAccountNo;
+
+    private String targetBankAccountName;
+
     private String certNo;
 
-    private CertType certType = CertType.ID_CARD;
-
-    private CurrencyType currencyType = CurrencyType.CNY;
-
-    @JsonFormat(pattern = ISO_DATE_TIME_PATTERN)
-    @NotNull
-    private LocalDateTime orderTime;
+    private CertType certType;
 
     private String callbackUrl;
 
     private String returnUrl;
+
+    private String refundOrderNo;
 }

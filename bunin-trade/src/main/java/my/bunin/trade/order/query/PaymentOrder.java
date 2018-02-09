@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import my.bunin.core.*;
+import my.bunin.trade.channel.query.Channel;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -20,8 +22,7 @@ import java.util.Set;
 public class PaymentOrder {
 
     @Id
-    @GeneratedValue
-    private Long id;
+    private String id;
 
     @Version
     private Long version;
@@ -32,8 +33,9 @@ public class PaymentOrder {
     @Column(name = "merchant_no", length = 64, nullable = false)
     private String merchantNo;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "channel_type", length = 64)
-    private String channelType;
+    private ChannelType channelType;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "transaction_type", length = 64, nullable = false)
@@ -46,8 +48,14 @@ public class PaymentOrder {
     @Column(nullable = false)
     private BigDecimal amount;
 
+    @Column(name = "refund_amount", nullable = false)
+    private BigDecimal refundAmount;
+
     @Column(name = "account_amount", nullable = false)
     private BigDecimal accountAmount;
+
+    @Column(name = "account_refund_amount", nullable = false)
+    private BigDecimal accountRefundAmount;
 
     @Column(name = "account_no", length = 64)
     private String accountNo;
@@ -87,6 +95,12 @@ public class PaymentOrder {
     @Column
     private String message;
 
+    @Column(name = "has_refund", columnDefinition = "TINYINT", nullable = false)
+    private boolean hasRefund;
+
+    @Column(name = "refund_order_no", length = 64)
+    private String refundOrderNo;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     private Set<PaymentTransaction> transactions = new HashSet<>();
 
@@ -112,6 +126,6 @@ public class PaymentOrder {
 
     private transient String callbackUrl;
 
-    private transient String redirectUrl;
+    private transient String returnUrl;
 
 }

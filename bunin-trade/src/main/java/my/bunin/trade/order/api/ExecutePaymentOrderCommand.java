@@ -7,13 +7,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class ExecuteOrderCommand {
-
-    @TargetAggregateIdentifier
-    private String id;
-
-    private String orderNo;
-
-    private String merchantNo;
+@ToString(callSuper = true)
+public class ExecutePaymentOrderCommand extends AbstractPaymentOrderCommand {
 
 }
