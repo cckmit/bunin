@@ -1,8 +1,4 @@
 
-configurations {
-    all*.exclude module: 'spring-boot-starter-tomcat'
-}
-
 dependencies {
     compile project(':bunin-core')
 
