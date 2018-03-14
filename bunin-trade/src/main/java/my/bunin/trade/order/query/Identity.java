@@ -18,7 +18,6 @@ import java.util.Set;
 public class Identity {
 
     @Id
-    @GeneratedValue
     private Long id;
 
     @Version
@@ -30,17 +29,32 @@ public class Identity {
     @Column(name = "bank_acronym", length = 64, nullable = false)
     private String bankAcronym;
 
-    @Column(name = "bank_account_no", length = 64, nullable = false)
-    private String bankAccountNo;
+    @Column(name = "digested_bank_account_no", nullable = false)
+    private String digestedBankAccountNo;
 
-    @Column(name = "bank_account_name")
-    private String bankAccountName;
+    @Column(name = "encrypted_bank_account_no", nullable = false)
+    private String encryptedBankAccountNo;
 
-    @Column(name = "bank_reserved_phone", length = 64)
-    private String bankReservedPhone;
+    @Column(name = "masked_bank_account_no", length = 64, nullable = false)
+    private String maskedBankAccountNo;
 
-    @Column(name = "cert_no", length = 64)
-    private String certNo;
+    @Column(name = "encrypted_bank_account_name")
+    private String encryptedBankAccountName;
+
+    @Column(name = "masked_bank_account_name")
+    private String maskedBankAccountName;
+
+    @Column(name = "encrypted_bank_reserved_phone")
+    private String encryptedBankReservedPhone;
+
+    @Column(name = "masked_bank_reserved_phone", length = 64)
+    private String maskedBankReservedPhone;
+
+    @Column(name = "encrypted_cert_no")
+    private String encryptedCertNo;
+
+    @Column(name = "masked_cert_no", length = 64)
+    private String maskedCertNo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "cert_type", length = 64, nullable = false)

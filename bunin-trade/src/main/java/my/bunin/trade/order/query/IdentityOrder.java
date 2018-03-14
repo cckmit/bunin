@@ -19,7 +19,6 @@ import java.util.Set;
 public class IdentityOrder {
 
     @Id
-    @GeneratedValue
     private String id;
 
     @Version
@@ -30,6 +29,9 @@ public class IdentityOrder {
 
     @Column(name = "merchant_no", length = 64, nullable = false)
     private String merchantNo;
+
+    @Column(name = "channel_no", length = 64)
+    private String channelNo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "channel_type", length = 64)

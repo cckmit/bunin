@@ -17,7 +17,6 @@ import javax.persistence.*;
 public class ChannelIdentity {
 
     @Id
-    @GeneratedValue
     private Long id;
 
     @Version
@@ -36,25 +35,6 @@ public class ChannelIdentity {
     @Enumerated(EnumType.STRING)
     @Column(name = "channel_type", length = 64, nullable = false)
     private ChannelType channelType;
-
-    @Column(name = "bank_acronym", length = 64, nullable = false)
-    private String bankAcronym;
-
-    @Column(name = "bank_account_no", length = 64, nullable = false)
-    private String bankAccountNo;
-
-    @Column(name = "bank_account_name")
-    private String bankAccountName;
-
-    @Column(name = "bank_reserved_phone", length = 64)
-    private String bankReservedPhone;
-
-    @Column(name = "cert_no", length = 64)
-    private String certNo;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "cert_type", length = 64, nullable = false)
-    private transient CertType certType;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 64, nullable = false)

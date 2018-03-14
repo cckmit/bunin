@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import my.bunin.core.*;
-import my.bunin.trade.channel.query.Channel;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -18,8 +16,8 @@ import java.util.Set;
 @Setter
 @ToString
 @Entity
-@Table(name = "payment_order", uniqueConstraints = @UniqueConstraint(columnNames = {"order_no", "merchant_no"}))
-public class PaymentOrder {
+@Table(name = "trade_order", uniqueConstraints = @UniqueConstraint(columnNames = {"trade_no", "merchant_no"}))
+public class TradeOrder {
 
     @Id
     private String id;
@@ -27,14 +25,11 @@ public class PaymentOrder {
     @Version
     private Long version;
 
-    @Column(name = "order_no", length = 64, nullable = false)
-    private String orderNo;
+    @Column(name = "trade_no", length = 64, nullable = false)
+    private String tradeNo;
 
     @Column(name = "merchant_no", length = 64, nullable = false)
     private String merchantNo;
-
-    @Column(name = "channel_no", length = 64)
-    private String channelNo;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "channel_type", length = 64)
@@ -104,12 +99,6 @@ public class PaymentOrder {
     @Column(name = "refund_order_no", length = 64)
     private String refundOrderNo;
 
-    @Column(name = "trade_no", length = 64)
-    private String tradeNo;
-
-    @Column(name = "batch_no", length = 64)
-    private String batchNo;
-
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "order")
     private Set<PaymentTransaction> transactions = new HashSet<>();
 
@@ -136,5 +125,4 @@ public class PaymentOrder {
     private transient String callbackUrl;
 
     private transient String returnUrl;
-
 }
