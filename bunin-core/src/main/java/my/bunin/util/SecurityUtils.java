@@ -194,4 +194,46 @@ public class SecurityUtils {
         return decrypt(algorithm, key, data, null, DEFAULT_PROVIDER);
     }
 
+    public static byte[] digest(String algorithm, byte[] data) throws SecurityException {
+        return digest(algorithm, data, null);
+    }
+
+    public static byte[] digest(String algorithm, byte[] data, byte[] salt) throws SecurityException {
+        Preconditions.checkNotNull(algorithm);
+        Preconditions.checkNotNull(data);
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance(algorithm, DEFAULT_PROVIDER);
+            if (salt != null) {
+                digest.update(salt);
+            }
+            digest.update(data);
+            return digest.digest();
+        } catch (NoSuchProviderException | NoSuchAlgorithmException err) {
+            throw new SecurityException("Error digesting the data", err);
+        }
+    }
+
+    public static byte[] digestWithNoProvider(String algorithm, byte[] data)
+            throws SecurityException {
+        return digestWithNoProvider(algorithm, data, null);
+    }
+
+    public static byte[] digestWithNoProvider(String algorithm, byte[] data, byte[] salt)
+            throws SecurityException {
+        Preconditions.checkNotNull(algorithm);
+        Preconditions.checkNotNull(data);
+
+        try {
+            MessageDigest digest = MessageDigest.getInstance(algorithm);
+            if (salt != null) {
+                digest.update(salt);
+            }
+            digest.update(data);
+            return digest.digest();
+        } catch (NoSuchAlgorithmException err) {
+            throw new SecurityException("Error digesting the data", err);
+        }
+    }
+
 }

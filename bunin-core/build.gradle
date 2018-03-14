@@ -9,6 +9,7 @@ dependencies {
     compile 'commons-codec:commons-codec'
     compile 'commons-beanutils:commons-beanutils'
     compile 'com.google.guava:guava'
+    compile 'dom4j:dom4j'
 
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
     compile 'com.fasterxml.jackson.datatype:jackson-datatype-joda'
