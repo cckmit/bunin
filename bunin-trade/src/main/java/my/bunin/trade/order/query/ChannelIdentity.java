@@ -17,6 +17,7 @@ import javax.persistence.*;
 public class ChannelIdentity {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @Version

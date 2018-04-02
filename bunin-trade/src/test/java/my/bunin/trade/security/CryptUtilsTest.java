@@ -1,15 +1,11 @@
-package my.bunin.payment.security;
+package my.bunin.trade.security;
 
 import lombok.extern.slf4j.Slf4j;
 import my.bunin.trade.merchant.query.MerchantSecret;
-import my.bunin.trade.security.Crypt;
-import my.bunin.trade.security.CryptUtils;
 import my.bunin.util.SecurityUtils;
-import org.apache.commons.codec.binary.Base64;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 
 @Slf4j

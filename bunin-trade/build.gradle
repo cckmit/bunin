@@ -9,6 +9,8 @@ dependencies {
     compile 'com.zaxxer:HikariCP'
     compile 'org.hibernate:hibernate-java8'
 
+    compile "org.apache.httpcomponents:httpclient:${httpClientVersion}"
+
     compile 'org.springframework.boot:spring-boot-starter-data-mongodb'
     compile 'org.springframework.boot:spring-boot-starter-data-redis'
 

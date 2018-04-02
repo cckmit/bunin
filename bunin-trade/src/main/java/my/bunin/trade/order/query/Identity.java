@@ -18,6 +18,7 @@ import java.util.Set;
 public class Identity {
 
     @Id
+    @GeneratedValue
     private Long id;
 
     @Version

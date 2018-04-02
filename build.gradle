@@ -1,7 +1,7 @@
 
 buildscript {
     ext.dependencyPluginVersion = '1.0.3.RELEASE'
-    ext.springBootVersion = '1.5.9.RELEASE'
+    ext.springBootVersion = '1.5.10.RELEASE'
 
     repositories {
         mavenLocal()
@@ -21,7 +21,8 @@ allprojects {
     ext.axonVersion = '3.1.2'
     ext.bouncycastleVersion = '1.59'
     ext.codecVersion = '1.11'
-    ext.springBootVersion = '1.5.9.RELEASE'
+    ext.httpClientVersion = '4.5.5'
+    ext.springBootVersion = '1.5.10.RELEASE'
 
     apply plugin: 'java'
     apply plugin: 'eclipse'
@@ -37,6 +38,7 @@ allprojects {
     dependencyManagement {
         imports {
             mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
+            mavenBom "io.spring.platform:platform-bom:Brussels-SR7"
         }
     }
 

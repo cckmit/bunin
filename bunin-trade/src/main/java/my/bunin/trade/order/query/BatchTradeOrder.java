@@ -11,8 +11,8 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "batch_payment_order", uniqueConstraints = @UniqueConstraint(columnNames = {"batch_no", "merchant_no"}))
-public class BatchPaymentOrder {
+@Table(name = "batch_trade_order", uniqueConstraints = @UniqueConstraint(columnNames = {"batch_no", "merchant_no"}))
+public class BatchTradeOrder {
 
     @Id
     private Long id;
@@ -29,5 +29,4 @@ public class BatchPaymentOrder {
     @Enumerated(EnumType.STRING)
     @Column(length = 64, nullable = false)
     private BatchOrderStatus status;
-
 }
