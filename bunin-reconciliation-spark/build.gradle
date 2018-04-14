@@ -1,0 +1,18 @@
+configurations {
+    all*.exclude module: 'slf4j-log4j12'
+    all*.exclude module: 'log4j'
+}
+
+dependencies {
+//    compileOnly "org.spark-project.spark:unused:1.0.0"
+    compile "org.apache.spark:spark-core_${scalaBinaryVersion}:${sparkVersion}"
+    compile "org.apache.spark:spark-streaming_${scalaBinaryVersion}:${sparkVersion}"
+    compile "org.apache.spark:spark-mllib_${scalaBinaryVersion}:${sparkVersion}"
+
+    compile "org.codehaus.janino:commons-compiler:${commonsCompilerVersion}"
+
+    compile 'mysql:mysql-connector-java'
+
+    compile 'org.springframework.boot:spring-boot-starter-logging'
+
+}

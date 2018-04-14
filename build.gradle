@@ -1,7 +1,7 @@
 
 buildscript {
     ext.dependencyPluginVersion = '1.0.3.RELEASE'
-    ext.springBootVersion = '1.5.10.RELEASE'
+    ext.springBootVersion = '1.5.11.RELEASE'
 
     repositories {
         mavenLocal()
@@ -21,10 +21,11 @@ allprojects {
     ext.axonVersion = '3.1.2'
     ext.bouncycastleVersion = '1.59'
     ext.codecVersion = '1.11'
+    ext.commonsCompilerVersion = '2.7.8'
     ext.httpClientVersion = '4.5.5'
     ext.scalaBinaryVersion = '2.11'
     ext.sparkVersion = '2.2.1'
-    ext.springBootVersion = '1.5.10.RELEASE'
+    ext.springBootVersion = '1.5.11.RELEASE'
 
     apply plugin: 'java'
     apply plugin: 'eclipse'
