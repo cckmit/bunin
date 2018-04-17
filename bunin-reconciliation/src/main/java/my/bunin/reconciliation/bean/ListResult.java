@@ -1,4 +1,4 @@
-package my.bunin.reconciliation;
+package my.bunin.reconciliation.bean;
 
 import lombok.Getter;
 import lombok.Setter;

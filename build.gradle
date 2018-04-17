@@ -40,8 +40,9 @@ allprojects {
 
     dependencyManagement {
         imports {
+            mavenBom "io.spring.platform:platform-bom:Brussels-SR8"
             mavenBom "org.springframework.boot:spring-boot-starter-parent:${springBootVersion}"
-            mavenBom "io.spring.platform:platform-bom:Brussels-SR7"
+
         }
     }
 

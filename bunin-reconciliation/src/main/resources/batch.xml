@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/batch http://www.springframework.org/schema/batch/spring-batch.xsd
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <batch:job-repository id="jobRepository"/>
+
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository"/>
+    </bean>
+
+    <bean id="incrementer" class="org.springframework.batch.core.launch.support.RunIdIncrementer"/>
+    
+    <batch:job id="partitionJob" incrementer="incrementer">
+        <batch:step id="step">
+            <batch:partition step="partitionStep" partitioner="partitioner">
+                <batch:handler grid-size="20" task-executor="taskExecutor"/>
+            </batch:partition>
+        </batch:step>
+    </batch:job>
+
+    <bean id="partitioner" class="org.springframework.batch.core.partition.support.MultiResourcePartitioner">
+        <!--<property name="resources" value="#{jobParameters['input.resources']}"/>-->
+        <property name="resources" value="file:///d:/tmp/bigspark/bf-*"/>
+
+    </bean>
+
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="20"/>
+        <property name="maxPoolSize" value="20"/>
+    </bean>
+
+    <batch:step id="partitionStep">
+        <batch:tasklet>
+            <batch:chunk reader="partitionReader" processor="partitionProcessor" writer="partitionWriter" commit-interval="100000"/>
+        </batch:tasklet>
+        <batch:listeners>
+            <batch:listener>
+                <bean class="my.bunin.reconciliation.partition.PartitionListener" scope="step"/>
+            </batch:listener>
+        </batch:listeners>
+    </batch:step>
+
+    <bean id="partitionReader" scope="step" autowire-candidate="false" parent="partitionReaderParent">
+        <property name="resource" value="#{stepExecutionContext[fileName]}"/>
+    </bean>
+
+    <bean id="partitionReaderParent" class="org.springframework.batch.item.file.FlatFileItemReader" abstract="true">
+        <property name="lineMapper">
+            <bean class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+                <property name="lineTokenizer">
+                    <bean class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer">
+                        <property name="delimiter" value=","/>
+                        <property name="names" value="orderNo,originStatus,targetStatus,result"/>
+                    </bean>
+                </property>
+                <property name="fieldSetMapper">
+                    <bean class="org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper">
+                        <property name="targetType" value="my.bunin.reconciliation.bean.ListResult"/>
+                    </bean>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
+    <bean id="partitionProcessor" class="my.bunin.reconciliation.partition.PartitionProcessor"/>
+
+    <bean id="partitionWriter" class="my.bunin.reconciliation.partition.PartitionWriter" scope="step">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="sql" value="insert into list_result (order_no, origin_status, target_status, result) values( :orderNo, :originStatus, :targetStatus, :result)"/>
+        <property name="itemSqlParameterSourceProvider">
+            <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
+        </property>
+    </bean>
+
+</beans>
