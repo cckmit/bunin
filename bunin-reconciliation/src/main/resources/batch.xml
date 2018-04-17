@@ -44,6 +44,7 @@
         </batch:listeners>
     </batch:step>
 
+    <!-- scope must be step when using stepExecutionContext -->
     <bean id="partitionReader" scope="step" autowire-candidate="false" parent="partitionReaderParent">
         <property name="resource" value="#{stepExecutionContext[fileName]}"/>
     </bean>
