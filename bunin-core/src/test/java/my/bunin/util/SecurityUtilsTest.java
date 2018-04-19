@@ -45,6 +45,14 @@ public class SecurityUtilsTest {
         log.info("aes secret key: {}", Base64.getEncoder().encodeToString(secretKey.getEncoded()));
     }
 
+@Test
+    public void testGenerateAes128Key() throws GeneralSecurityException {
+        SecretKey secretKey = SecurityUtils.generateSecretKey(SecurityUtils.AES, null, 128);
+        log.info("aes secret key: {}", Base64.getEncoder().encodeToString(secretKey.getEncoded()));
+    }
+
+
+
     @Test
     public void testGetAesKey() throws GeneralSecurityException {
 //        String base64AesKey = "vIb9FZ9xQOrZZEsKeSxkWMiMyeDImXGU";

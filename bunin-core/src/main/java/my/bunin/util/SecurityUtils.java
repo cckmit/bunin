@@ -56,16 +56,19 @@ public class SecurityUtils {
         return generateKeyPair(algorithm, DEFAULT_KEY_SIZE, DEFAULT_PROVIDER);
     }
 
-    public static SecretKey generateSecretKey(String algorithm, String provider)
+    public static SecretKey generateSecretKey(String algorithm, String provider, int keySize)
             throws GeneralSecurityException {
         KeyGenerator generator = Strings.isNullOrEmpty(provider) ?
                 KeyGenerator.getInstance(algorithm) :
                 KeyGenerator.getInstance(algorithm, DEFAULT_PROVIDER);
+        if (keySize >= 128) {
+            generator.init(keySize);
+        }
         return generator.generateKey();
     }
 
     public static SecretKey generateSecretKey(String algorithm) throws GeneralSecurityException {
-        return generateSecretKey(algorithm, DEFAULT_PROVIDER);
+        return generateSecretKey(algorithm, DEFAULT_PROVIDER, 0);
     }
 
     public static PrivateKey getPrivateKey(String algorithm, String base64Key,
