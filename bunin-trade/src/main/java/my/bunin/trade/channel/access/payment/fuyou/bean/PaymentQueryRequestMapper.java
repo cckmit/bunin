@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @XStreamAlias("qrytransreq")
-public class TransactionQueryRequestMapper {
+public class PaymentQueryRequestMapper {
 
     @XStreamAlias("ver")
     private String version;

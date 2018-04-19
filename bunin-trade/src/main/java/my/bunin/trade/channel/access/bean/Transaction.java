@@ -26,7 +26,7 @@ public class Transaction {
 
     private PaymentType paymentType;
 
-    private RequestStage stage;
+    private RequestStage stage = RequestStage.WHOLE;
 
     private BigDecimal amount;
 

@@ -2,10 +2,7 @@ package my.bunin.trade.channel.access.payment.fuyou;
 
 import lombok.extern.slf4j.Slf4j;
 import my.bunin.core.*;
-import my.bunin.trade.channel.access.bean.AccessConfiguration;
-import my.bunin.trade.channel.access.bean.PaymentRequest;
-import my.bunin.trade.channel.access.bean.PaymentResponse;
-import my.bunin.trade.channel.access.bean.Transaction;
+import my.bunin.trade.channel.access.bean.*;
 import my.bunin.util.JacksonUtils;
 import my.bunin.util.SecurityUtils;
 import my.bunin.util.SnowFlake;
@@ -155,6 +152,31 @@ public class FuyouExecutorTest {
         log.info("request: {}", JacksonUtils.writeValueAsString(request));
 
         PaymentResponse response = executor.execute(request);
+
+        log.info("response: {}", JacksonUtils.writeValueAsString(response));
+
+    }
+
+    @Test
+    public void testRechargeQuery() throws IOException {
+        PaymentQueryRequest request = new PaymentQueryRequest();
+
+        // 986852527347732481
+        request.setConfiguration(generateConfiguration());
+
+        Transaction transaction = new Transaction();
+        transaction.setSerialNo("986852527347732481");
+        transaction.setTransactionType(TransactionType.RECHARGE);
+        transaction.setPaymentType(PaymentType.FASTPAY);
+        transaction.setAmount(BigDecimal.valueOf(5));
+        transaction.setAccountType(AccountType.PRIVATE);
+        transaction.setCurrencyType(CurrencyType.CNY);
+
+        request.setTransaction(transaction);
+
+        log.info("request: {}", JacksonUtils.writeValueAsString(request));
+
+        PaymentQueryResponse response = executor.execute(request);
 
         log.info("response: {}", JacksonUtils.writeValueAsString(response));
 

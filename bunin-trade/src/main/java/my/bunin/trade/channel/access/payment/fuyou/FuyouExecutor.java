@@ -1,8 +1,6 @@
 package my.bunin.trade.channel.access.payment.fuyou;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
 import my.bunin.core.PaymentType;
@@ -27,7 +25,6 @@ import org.bouncycastle.util.Strings;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,17 +58,18 @@ public class FuyouExecutor extends AbstractExecutor {
         this.client = client;
 
         xStream = new XStream();
-        xStream.processAnnotations(TransactionRequestMapper.class);
-        xStream.processAnnotations(TransactionResponseMapper.class);
-        xStream.processAnnotations(TransactionQueryRequestMapper.class);
-        xStream.processAnnotations(TransactionQueryResponseMapper.class);
+        xStream.processAnnotations(RechargePaymentRequestMapper.class);
+        xStream.processAnnotations(RechargePaymentResponseMapper.class);
+        xStream.processAnnotations(PaymentQueryRequestMapper.class);
+        xStream.processAnnotations(PaymentQueryResponseMapper.class);
 
         XStream.setupDefaultSecurity(xStream);
         xStream.allowTypes(new Class[]{
-                TransactionRequestMapper.class,
-                TransactionResponseMapper.class,
-                TransactionQueryRequestMapper.class,
-                TransactionQueryResponseMapper.class
+                RechargePaymentRequestMapper.class,
+                RechargePaymentResponseMapper.class,
+                PaymentQueryRequestMapper.class,
+                PaymentQueryResponseMapper.class,
+                TransMapper.class
         });
         xStream.ignoreUnknownElements();
 
@@ -103,15 +101,15 @@ public class FuyouExecutor extends AbstractExecutor {
 
         if (TransactionType.RECHARGE.equals(transaction.getTransactionType())
                 && PaymentType.FASTPAY.equals(transaction.getPaymentType())) {
-            return formatRechargeTransactionRequest(request);
+            return formatRechargePaymentRequest(request);
         }
 
-        throw new UnsupportedOperationException(String.format("%s transaction type was unsupported.",
-                transaction.getTransactionType()));
+        throw new UnsupportedOperationException(String.format("%s transaction type was unsupported. payment type: %s",
+                transaction.getTransactionType(), transaction.getPaymentType()));
     }
 
-    private String formatRechargeTransactionRequest(PaymentRequest request) {
-        TransactionRequestMapper requestMapper = new TransactionRequestMapper();
+    private String formatRechargePaymentRequest(PaymentRequest request) {
+        RechargePaymentRequestMapper requestMapper = new RechargePaymentRequestMapper();
 
         Transaction transaction = request.getTransaction();
         AccessConfiguration configuration = request.getConfiguration();
@@ -130,7 +128,7 @@ public class FuyouExecutor extends AbstractExecutor {
 
         String xml = xStream.toXML(requestMapper);
 
-        return buildRequestContent4Recharge(request, xml, RECHARGE_REQUEST_TYPE);
+        return buildRequestContent(request, xml, RECHARGE_REQUEST_TYPE);
     }
 
     @Override
@@ -139,7 +137,7 @@ public class FuyouExecutor extends AbstractExecutor {
 
         if (TransactionType.RECHARGE.equals(transaction.getTransactionType())
                 && PaymentType.FASTPAY.equals(transaction.getPaymentType())) {
-            return formatRechargeTransactionQueryRequest(request);
+            return formatRechargePaymentQueryRequest(request);
         }
 
         throw new UnsupportedOperationException(String.format("%s transaction type was unsupported.",
@@ -147,8 +145,8 @@ public class FuyouExecutor extends AbstractExecutor {
 
     }
 
-    private String formatRechargeTransactionQueryRequest(PaymentQueryRequest request) {
-        TransactionQueryRequestMapper requestMapper = new TransactionQueryRequestMapper();
+    private String formatRechargePaymentQueryRequest(PaymentQueryRequest request) {
+        PaymentQueryRequestMapper requestMapper = new PaymentQueryRequestMapper();
         Transaction transaction = request.getTransaction();
 
         requestMapper.setVersion(VER_1_0);
@@ -159,10 +157,10 @@ public class FuyouExecutor extends AbstractExecutor {
 
         String xml = xStream.toXML(requestMapper);
 
-        return buildRequestContent4Recharge(request, xml, RECHARGE_QUERY_REQUEST_TYPE);
+        return buildRequestContent(request, xml, RECHARGE_QUERY_REQUEST_TYPE);
     }
 
-    private String buildRequestContent4Recharge(Request request, String xml, String type) {
+    private String buildRequestContent(Request request, String xml, String type) {
         AccessConfiguration configuration = request.getConfiguration();
 
         Map<String, String> requestMap = new HashMap<>();
@@ -178,13 +176,12 @@ public class FuyouExecutor extends AbstractExecutor {
         requestMap.put(FIELD_MAC, mac);
 
         return StringUtils.pair(requestMap);
-//        return StringUtils.encodePair(requestMap);
     }
 
     @Override
     protected PaymentResponse parse(PaymentRequest request, String responseContent) {
 
-        TransactionResponseMapper responseMapper = (TransactionResponseMapper)xStream.fromXML(responseContent);
+        RechargePaymentResponseMapper responseMapper = (RechargePaymentResponseMapper)xStream.fromXML(responseContent);
 
         PaymentResponse response = new PaymentResponse();
         response.setCode(responseMapper.getCode());
@@ -210,7 +207,7 @@ public class FuyouExecutor extends AbstractExecutor {
 
     @Override
     protected PaymentQueryResponse parse(PaymentQueryRequest request, String responseContent) {
-        TransactionQueryResponseMapper responseMapper = (TransactionQueryResponseMapper)xStream.fromXML(responseContent);
+        PaymentQueryResponseMapper responseMapper = (PaymentQueryResponseMapper)xStream.fromXML(responseContent);
 
         List<TransMapper> transMappers =  responseMapper.getTransactions();
 
