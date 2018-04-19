@@ -1,10 +1,15 @@
 package my.bunin.trade.channel.access.bean;
 
 public enum RequestType {
-    TRANSACTION,
-    TRANSACTION_QUERY,
+
+    // payment
+    PAYMENT,
+    PAYMENT_QUERY,
     IDENTITY,
     IDENTITY_QUERY,
-    RECONCILIATIONS
+    RECONCILIATIONS,
+
+    // custody
+    CUSTODY_REGISTER
 
 }

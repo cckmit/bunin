@@ -16,8 +16,4 @@ public class TransactionResponseMapper {
     @XStreamAlias("memo")
     private String message;
 
-    @XStreamAlias("transStatusDesc")
-    private String status;
-
-
 }

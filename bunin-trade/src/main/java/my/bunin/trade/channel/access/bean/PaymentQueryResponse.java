@@ -5,5 +5,5 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TransactionQueryResponse extends PaymentResponse {
+public class PaymentQueryResponse extends TransactionResponse {
 }

@@ -18,6 +18,8 @@ dependencies {
     compile "org.axonframework:axon-spring-boot-autoconfigure:${axonVersion}"
     compile "org.axonframework:axon-mongo:${axonVersion}"
 
+    compile "commons-io:commons-io"
+
 //    compile 'javax.validation:validation-api'
     compile 'org.hibernate:hibernate-validator'
 

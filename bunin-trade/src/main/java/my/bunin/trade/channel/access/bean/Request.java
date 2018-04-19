@@ -12,6 +12,7 @@ public abstract class Request {
 
     @Setter
     private AccessConfiguration configuration;
+
     private final LocalDateTime createTime = LocalDateTime.now();
 
     public Request(RequestType type) {

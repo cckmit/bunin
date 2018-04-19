@@ -1,6 +1,8 @@
 package my.bunin.trade.channel.access.payment.fuyou;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 import com.thoughtworks.xstream.XStream;
 import lombok.extern.slf4j.Slf4j;
 import my.bunin.core.PaymentType;
@@ -8,25 +10,26 @@ import my.bunin.core.TransactionStatus;
 import my.bunin.core.TransactionType;
 import my.bunin.trade.channel.access.AbstractExecutor;
 import my.bunin.trade.channel.access.bean.*;
-import my.bunin.trade.channel.access.payment.fuyou.bean.TransactionQueryRequestMapper;
-import my.bunin.trade.channel.access.payment.fuyou.bean.TransactionQueryResponseMapper;
-import my.bunin.trade.channel.access.payment.fuyou.bean.TransactionRequestMapper;
-import my.bunin.trade.channel.access.payment.fuyou.bean.TransactionResponseMapper;
+import my.bunin.trade.channel.access.payment.fuyou.bean.*;
 import my.bunin.util.NumberUtils;
 import my.bunin.util.SecurityUtils;
 import my.bunin.util.StringUtils;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHeader;
 import org.apache.http.util.EntityUtils;
 import org.bouncycastle.util.Strings;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static my.bunin.util.StringUtils.VERTICAL;
@@ -45,6 +48,11 @@ public class FuyouExecutor extends AbstractExecutor {
     private static final String FIELD_REQUEST_TYPE = "reqtype";
     private static final String FIELD_MAC = "mac";
 
+    private static final String SUCCESS_CODES = "|000000|1|";
+
+    private static final Header HEARDER_FORM_URL_ENCODED =
+            new BasicHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+
     private HttpClient client;
 
     private final XStream xStream;
@@ -58,6 +66,13 @@ public class FuyouExecutor extends AbstractExecutor {
         xStream.processAnnotations(TransactionQueryRequestMapper.class);
         xStream.processAnnotations(TransactionQueryResponseMapper.class);
 
+        XStream.setupDefaultSecurity(xStream);
+        xStream.allowTypes(new Class[]{
+                TransactionRequestMapper.class,
+                TransactionResponseMapper.class,
+                TransactionQueryRequestMapper.class,
+                TransactionQueryResponseMapper.class
+        });
         xStream.ignoreUnknownElements();
 
     }
@@ -78,11 +93,12 @@ public class FuyouExecutor extends AbstractExecutor {
     private HttpResponse doExecute(Request request, String requestContent) throws IOException {
         HttpPost httpPost = new HttpPost(request.getConfiguration().getBaseUrl());
         httpPost.setEntity(new StringEntity(requestContent, StringUtils.UTF8));
+        httpPost.setHeader(HEARDER_FORM_URL_ENCODED);
         return client.execute(httpPost);
     }
 
     @Override
-    protected String format(TransactionRequest request) {
+    protected String format(PaymentRequest request) {
         Transaction transaction = request.getTransaction();
 
         if (TransactionType.RECHARGE.equals(transaction.getTransactionType())
@@ -94,7 +110,7 @@ public class FuyouExecutor extends AbstractExecutor {
                 transaction.getTransactionType()));
     }
 
-    private String formatRechargeTransactionRequest(TransactionRequest request) {
+    private String formatRechargeTransactionRequest(PaymentRequest request) {
         TransactionRequestMapper requestMapper = new TransactionRequestMapper();
 
         Transaction transaction = request.getTransaction();
@@ -109,7 +125,8 @@ public class FuyouExecutor extends AbstractExecutor {
         requestMapper.setAccountName(transaction.getBankAccountName());
         requestMapper.setAmount(NumberUtils.removeDecimalPoint(transaction.getAmount()).toString());
         requestMapper.setCertNo(transaction.getCertNo());
-        requestMapper.setCertType(transaction.getCertType().name());
+        requestMapper.setCertType(configuration.getCertTypeMapper().get(transaction.getCertType()));
+        requestMapper.setMobile(transaction.getBankReservedPhone());
 
         String xml = xStream.toXML(requestMapper);
 
@@ -117,7 +134,7 @@ public class FuyouExecutor extends AbstractExecutor {
     }
 
     @Override
-    protected String format(TransactionQueryRequest request) {
+    protected String format(PaymentQueryRequest request) {
         Transaction transaction = request.getTransaction();
 
         if (TransactionType.RECHARGE.equals(transaction.getTransactionType())
@@ -130,7 +147,7 @@ public class FuyouExecutor extends AbstractExecutor {
 
     }
 
-    private String formatRechargeTransactionQueryRequest(TransactionQueryRequest request) {
+    private String formatRechargeTransactionQueryRequest(PaymentQueryRequest request) {
         TransactionQueryRequestMapper requestMapper = new TransactionQueryRequestMapper();
         Transaction transaction = request.getTransaction();
 
@@ -160,53 +177,50 @@ public class FuyouExecutor extends AbstractExecutor {
                 Strings.toUTF8ByteArray(plainMac)));
         requestMap.put(FIELD_MAC, mac);
 
-        return StringUtils.encodePair(requestMap);
+        return StringUtils.pair(requestMap);
+//        return StringUtils.encodePair(requestMap);
     }
 
     @Override
-    protected TransactionResponse parse(TransactionRequest request, String responseContent) {
+    protected PaymentResponse parse(PaymentRequest request, String responseContent) {
 
         TransactionResponseMapper responseMapper = (TransactionResponseMapper)xStream.fromXML(responseContent);
 
-        TransactionResponse response = new TransactionResponse();
+        PaymentResponse response = new PaymentResponse();
         response.setCode(responseMapper.getCode());
         response.setMessage(responseMapper.getMessage());
         response.setContent(responseContent);
 
         Transaction transaction = new Transaction();
-        transaction.setStatus(parseTransactionStatus(responseMapper.getStatus()));
+        transaction.setStatus(parseTransactionStatus(responseMapper.getCode()));
         response.setTransaction(transaction);
 
         return response;
     }
 
-    private TransactionStatus parseTransactionStatus(String status) {
-        switch (status) {
-            case "success":
-                return TransactionStatus.SUCCEED;
-            case "internalFail":
-            case "channelFail":
-            case "cardInfoError":
-                return TransactionStatus.FAILED;
-            case "acceptSuccess":
-                //noinspection SpellCheckingInspection
-            case "unknowReasons":
-            default:
-                return TransactionStatus.PROCEESING;
+    private TransactionStatus parseTransactionStatus(String code) {
+
+        String formatCode = String.format("|%s|", code);
+        if (SUCCESS_CODES.contains(formatCode)) {
+            return TransactionStatus.SUCCEED;
+        } else {
+            return TransactionStatus.FAILED;
         }
     }
 
     @Override
-    protected TransactionQueryResponse parse(TransactionQueryRequest request, String responseContent) {
+    protected PaymentQueryResponse parse(PaymentQueryRequest request, String responseContent) {
         TransactionQueryResponseMapper responseMapper = (TransactionQueryResponseMapper)xStream.fromXML(responseContent);
 
-        TransactionQueryResponse response = new TransactionQueryResponse();
+        List<TransMapper> transMappers =  responseMapper.getTransactions();
+
+        PaymentQueryResponse response = new PaymentQueryResponse();
         response.setCode(responseMapper.getCode());
         response.setMessage(responseMapper.getMessage());
         response.setContent(responseContent);
 
         Transaction transaction = new Transaction();
-        transaction.setStatus(parseTransactionQueryStatus(responseMapper.getTransaction().getStatus()));
+        transaction.setStatus(parseTransactionQueryStatus(transMappers.get(0).getStatus()));
         response.setTransaction(transaction);
 
         return response;
@@ -222,7 +236,7 @@ public class FuyouExecutor extends AbstractExecutor {
             case "3":
             case "7":
             default:
-                return TransactionStatus.PROCEESING;
+                return TransactionStatus.PROCESSING;
         }
     }
 }

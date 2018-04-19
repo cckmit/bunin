@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 public class PaymentTransaction {
 
     @Id
-    @GeneratedValue
     private String id;
 
     @Version

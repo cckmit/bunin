@@ -5,12 +5,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class PaymentRequest extends Request {
+public class PaymentRequest extends TransactionRequest {
 
-    public PaymentRequest(RequestType type) {
-        super(type);
+    public PaymentRequest() {
+        super(RequestType.PAYMENT);
     }
-
-    private Transaction transaction;
 
 }

@@ -3,12 +3,19 @@ package my.bunin.trade.channel.access.bean;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
-public class TransactionRequest extends PaymentRequest {
+public abstract class TransactionRequest extends Request {
 
-    public TransactionRequest() {
-        super(RequestType.TRANSACTION);
+
+    private Transaction transaction;
+
+    public TransactionRequest(RequestType type) {
+        super(type);
     }
+
+
 
 }

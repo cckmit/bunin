@@ -3,16 +3,20 @@ package my.bunin.trade.channel.access;
 import lombok.extern.slf4j.Slf4j;
 import my.bunin.trade.channel.access.bean.*;
 
+import java.io.IOException;
+
 @Slf4j
 public abstract class AbstractExecutor implements Executor {
 
     protected String format(Request request) {
 
         switch (request.getType()) {
-            case TRANSACTION:
-                return format((TransactionRequest) request);
-            case TRANSACTION_QUERY:
-                return format((TransactionQueryRequest) request);
+            case CUSTODY_REGISTER:
+                return format((CustodyRegisterRequest) request);
+            case PAYMENT:
+                return format((PaymentRequest) request);
+            case PAYMENT_QUERY:
+                return format((PaymentQueryRequest) request);
             case IDENTITY:
                 return format((IdentityRequest) request);
             case IDENTITY_QUERY:
@@ -24,11 +28,15 @@ public abstract class AbstractExecutor implements Executor {
         }
     }
 
-    protected String format(TransactionRequest request) {
+    protected String format(CustodyRegisterRequest request) {
+        throw new UnsupportedOperationException("custody private register request was unsupported.");
+    }
+
+    protected String format(PaymentRequest request) {
         throw new UnsupportedOperationException("transaction request was unsupported.");
     }
 
-    protected String format(TransactionQueryRequest request) {
+    protected String format(PaymentQueryRequest request) {
         throw new UnsupportedOperationException("transaction query request was unsupported.");
     }
 
@@ -47,10 +55,10 @@ public abstract class AbstractExecutor implements Executor {
     protected Response parse(Request request, String responseContent) {
 
         switch (request.getType()) {
-            case TRANSACTION:
-                return parse((TransactionRequest) request, responseContent);
-            case TRANSACTION_QUERY:
-                return parse((TransactionQueryRequest) request, responseContent);
+            case PAYMENT:
+                return parse((PaymentRequest) request, responseContent);
+            case PAYMENT_QUERY:
+                return parse((PaymentQueryRequest) request, responseContent);
             case IDENTITY:
                 return parse((IdentityRequest) request, responseContent);
             case IDENTITY_QUERY:
@@ -62,11 +70,11 @@ public abstract class AbstractExecutor implements Executor {
         }
     }
 
-    protected TransactionResponse parse(TransactionRequest request, String responseContent) {
+    protected PaymentResponse parse(PaymentRequest request, String responseContent) {
         throw new UnsupportedOperationException("transaction request was unsupported.");
     }
 
-    protected TransactionQueryResponse parse(TransactionQueryRequest request, String responseContent) {
+    protected PaymentQueryResponse parse(PaymentQueryRequest request, String responseContent) {
         throw new UnsupportedOperationException("transaction query request was unsupported.");
     }
 

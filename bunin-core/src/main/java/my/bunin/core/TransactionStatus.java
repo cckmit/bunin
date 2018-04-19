@@ -2,7 +2,7 @@ package my.bunin.core;
 
 public enum TransactionStatus {
     CREATED,
-    PROCEESING,
+    PROCESSING,
     SUCCEED,
     FAILED
 }

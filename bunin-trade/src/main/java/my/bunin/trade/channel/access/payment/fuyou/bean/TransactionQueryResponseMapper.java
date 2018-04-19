@@ -5,6 +5,9 @@ import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SuppressWarnings("SpellCheckingInspection")
 @Getter
 @Setter
@@ -18,5 +21,5 @@ public class TransactionQueryResponseMapper {
     private String message;
 
     @XStreamImplicit
-    private TransMapper transaction;
+    private List<TransMapper> transactions = new ArrayList<>();
 }

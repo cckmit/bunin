@@ -1,9 +1,14 @@
 package my.bunin.trade.channel.access.payment.fuyou;
 
 import lombok.extern.slf4j.Slf4j;
-import my.bunin.core.BankAcronym;
+import my.bunin.core.*;
 import my.bunin.trade.channel.access.bean.AccessConfiguration;
+import my.bunin.trade.channel.access.bean.PaymentRequest;
+import my.bunin.trade.channel.access.bean.PaymentResponse;
+import my.bunin.trade.channel.access.bean.Transaction;
+import my.bunin.util.JacksonUtils;
 import my.bunin.util.SecurityUtils;
+import my.bunin.util.SnowFlake;
 import my.bunin.util.StringUtils;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
@@ -12,13 +17,18 @@ import org.apache.http.conn.ssl.TrustAllStrategy;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +37,8 @@ public class FuyouExecutorTest {
 
 
     private FuyouExecutor executor;
+
+    private static final SnowFlake snowFlake = new SnowFlake(1L, 1L);
 
     @Before
     public void init() throws Exception {
@@ -59,6 +71,7 @@ public class FuyouExecutorTest {
         configuration.setBaseUrl("https://fht-test.fuiou.com/fuMer/req.do");
         configuration.setSignatureAlgorithm(SecurityUtils.MD5);
         configuration.setBankNoMapper(generateBankNoMapper());
+        configuration.setCertTypeMapper(generateCertTypeMapper());
 
         return configuration;
     }
@@ -95,8 +108,56 @@ public class FuyouExecutorTest {
         return bankNoMapper;
     }
 
+    private Map<CertType, String> generateCertTypeMapper() {
+        Map<CertType, String> certTypeMapper = new HashMap<>();
+        certTypeMapper.put(CertType.ID_CARD, "0");
+        certTypeMapper.put(CertType.PASSPORT, "1");
+        certTypeMapper.put(CertType.RESIDENCE_BOOKLET, "5");
+        certTypeMapper.put(CertType.ARMY_ID_CARD, "2");
+        certTypeMapper.put(CertType.POLICE_ID_CARD, "7");
+        certTypeMapper.put(CertType.SOLDIER_ID_CARD, "3");
+        certTypeMapper.put(CertType.ALIEN_RESIDENCE_PERMIT, "7");
+        certTypeMapper.put(CertType.MTP_HK_MACAO, "7");
+        certTypeMapper.put(CertType.MTP_TAIWAN, "7");
+
+        return certTypeMapper;
+    }
+
     @Test
-    public void testRecharge() {
+    public void testRecharge() throws IOException {
+
+        PaymentRequest request = new PaymentRequest();
+        request.setConfiguration(generateConfiguration());
+
+        Transaction transaction = new Transaction();
+        transaction.setOrderNo(String.valueOf(snowFlake.nextId()));
+        transaction.setSerialNo(String.valueOf(snowFlake.nextId()));
+        transaction.setTransactionType(TransactionType.RECHARGE);
+        transaction.setPaymentType(PaymentType.FASTPAY);
+        transaction.setStage(RequestStage.WHOLE);
+        transaction.setAmount(BigDecimal.valueOf(5));
+        transaction.setAccountType(AccountType.PRIVATE);
+        transaction.setCurrencyType(CurrencyType.CNY);
+        transaction.setExecuteTime(LocalDateTime.now());
+        transaction.setCreateTime(LocalDateTime.now());
+        transaction.setUpdateTime(LocalDateTime.now());
+        transaction.setSettlementDate(LocalDate.now());
+
+        transaction.setBankAcronym(BankAcronym.ICBC);
+        transaction.setBankAccountName("张飞");
+        transaction.setBankAccountNo("6227002942040548888");
+        transaction.setBankReservedPhone("13521238888");
+        transaction.setCertNo("372929199611108888");
+        transaction.setCertType(CertType.ID_CARD);
+
+        request.setTransaction(transaction);
+
+        log.info("request: {}", JacksonUtils.writeValueAsString(request));
+
+        PaymentResponse response = executor.execute(request);
+
+        log.info("response: {}", JacksonUtils.writeValueAsString(response));
+
 
     }
 
