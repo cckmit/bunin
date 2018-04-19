@@ -1,7 +1,7 @@
 package my.bunin.trade.config;
 
-import my.bunin.trade.order.OrderAggregate;
-import my.bunin.trade.order.OrderCommandHandler;
+import my.bunin.trade.payment.OrderAggregate;
+import my.bunin.trade.payment.OrderCommandHandler;
 import org.axonframework.eventhandling.EventBus;
 import org.axonframework.spring.config.AxonConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
