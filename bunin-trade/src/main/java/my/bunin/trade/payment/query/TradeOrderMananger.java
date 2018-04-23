@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class TradeOrderMananger {
 
-    private TradeOrderRepository repository;
+  private TradeOrderRepository repository;
 
-    public TradeOrderMananger(TradeOrderRepository repository) {
-        this.repository = repository;
-    }
+  public TradeOrderMananger(TradeOrderRepository repository) {
+    this.repository = repository;
+  }
 }

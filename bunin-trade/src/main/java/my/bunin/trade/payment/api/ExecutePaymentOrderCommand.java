@@ -1,9 +1,8 @@
 package my.bunin.trade.payment.api;
 
-import lombok.*;
-import org.axonframework.commandhandling.TargetAggregateIdentifier;
-
-import java.math.BigDecimal;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter

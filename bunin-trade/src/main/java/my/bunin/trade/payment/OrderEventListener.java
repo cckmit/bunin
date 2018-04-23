@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class OrderEventListener {
 
-    @EventHandler
-    public void handle(PaymentOrderCreatedEvent event) {
-        log.info("payment event handler, payment created event: {}", event);
-    }
+  @EventHandler
+  public void handle(PaymentOrderCreatedEvent event) {
+    log.info("payment event handler, payment created event: {}", event);
+  }
 }

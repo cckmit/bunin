@@ -9,9 +9,9 @@ import java.math.BigDecimal;
 @Setter
 public class CustodyRegisterResponse extends TransactionResponse {
 
-    private String userRole;
-    private String authList;
-    private String failTime;
-    private String accessType;
-    private BigDecimal amount;
+  private String userRole;
+  private String authList;
+  private String failTime;
+  private String accessType;
+  private BigDecimal amount;
 }

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BatchTradeOrderManager {
 
-    private BatchTradeOrderRepository repository;
+  private BatchTradeOrderRepository repository;
 
-    public BatchTradeOrderManager(BatchTradeOrderRepository repository) {
-        this.repository = repository;
-    }
+  public BatchTradeOrderManager(BatchTradeOrderRepository repository) {
+    this.repository = repository;
+  }
 }

@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @EnableBatchProcessing
 public class ReconciliationApp {
 
-    public static void main(String[] args) {
-        SpringApplication.run(ReconciliationApp.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(ReconciliationApp.class, args);
+  }
 }

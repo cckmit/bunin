@@ -10,39 +10,39 @@ import lombok.Setter;
 @XStreamAlias("trans")
 public class TransMapper {
 
-    @XStreamAlias("merdt")
-    private String settledDate;
+  @XStreamAlias("merdt")
+  private String settledDate;
 
-    @XStreamAlias("orderno")
-    private String orderNo;
+  @XStreamAlias("orderno")
+  private String orderNo;
 
-    @XStreamAlias("accntno")
-    private String accountNo;
+  @XStreamAlias("accntno")
+  private String accountNo;
 
-    @XStreamAlias("accntnm")
-    private String accountName;
+  @XStreamAlias("accntnm")
+  private String accountName;
 
-    @XStreamAlias("amt")
-    private String amount;
+  @XStreamAlias("amt")
+  private String amount;
 
-    @XStreamAlias("entseq")
-    private String enterpriseSequence;
+  @XStreamAlias("entseq")
+  private String enterpriseSequence;
 
-    @XStreamAlias("memo")
-    private String remark;
+  @XStreamAlias("memo")
+  private String remark;
 
-    @XStreamAlias("txncd")
-    private String transactionCode;
+  @XStreamAlias("txncd")
+  private String transactionCode;
 
-    @XStreamAlias("projectid")
-    private String projectId;
+  @XStreamAlias("projectid")
+  private String projectId;
 
-    @XStreamAlias("state")
-    private String status;
+  @XStreamAlias("state")
+  private String status;
 
-    @XStreamAlias("result")
-    private String message;
+  @XStreamAlias("result")
+  private String message;
 
-    @XStreamAlias("reason")
-    private String reason;
+  @XStreamAlias("reason")
+  private String reason;
 }

@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 @Value
 public class PaymentOrderExecutedEvent {
 
-    private String id;
-    private String orderNo;
-    private String merchantNo;
-    private BigDecimal amount;
+  private String id;
+  private String orderNo;
+  private String merchantNo;
+  private BigDecimal amount;
 }

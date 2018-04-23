@@ -10,40 +10,40 @@ import lombok.Setter;
 @XStreamAlias("incomeforreq")
 public class RechargePaymentRequestMapper {
 
-    @XStreamAlias("ver")
-    private String version;
+  @XStreamAlias("ver")
+  private String version;
 
-    @XStreamAlias("merdt")
-    private String settleDate;
+  @XStreamAlias("merdt")
+  private String settleDate;
 
-    @XStreamAlias("orderno")
-    private String orderNo;
+  @XStreamAlias("orderno")
+  private String orderNo;
 
-    @XStreamAlias("bankno")
-    private String bankNo;
+  @XStreamAlias("bankno")
+  private String bankNo;
 
-    @XStreamAlias("accntno")
-    private String accountNo;
+  @XStreamAlias("accntno")
+  private String accountNo;
 
-    @XStreamAlias("accntnm")
-    private String accountName;
+  @XStreamAlias("accntnm")
+  private String accountName;
 
-    @XStreamAlias("amt")
-    private String amount;
+  @XStreamAlias("amt")
+  private String amount;
 
-    @XStreamAlias("mobile")
-    private String mobile;
+  @XStreamAlias("mobile")
+  private String mobile;
 
-    @XStreamAlias("certtp")
-    private String certType;
+  @XStreamAlias("certtp")
+  private String certType;
 
-    @XStreamAlias("certno")
-    private String certNo;
+  @XStreamAlias("certno")
+  private String certNo;
 
-    @XStreamAlias("txncd")
-    private String transactionCode;
+  @XStreamAlias("txncd")
+  private String transactionCode;
 
-    @XStreamAlias("projectid")
-    private String projectId;
+  @XStreamAlias("projectid")
+  private String projectId;
 
 }

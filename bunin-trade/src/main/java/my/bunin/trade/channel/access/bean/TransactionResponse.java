@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class TransactionResponse extends Response {
 
-    private Transaction transaction;
+  private Transaction transaction;
 
 }

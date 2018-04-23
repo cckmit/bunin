@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class JerseyConfig extends ResourceConfig {
 
-    public JerseyConfig() {
-        property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
-        register(PaymentEndpoint.class);
-    }
+  public JerseyConfig() {
+    property(ServerProperties.BV_SEND_ERROR_IN_RESPONSE, true);
+    register(PaymentEndpoint.class);
+  }
 }

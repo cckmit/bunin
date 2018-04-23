@@ -13,18 +13,14 @@ import javax.annotation.Resource;
 @Configuration
 public class OrderAutoConfiguration {
 
-    @Resource
-    private EventBus eventBus;
+  @Resource
+  private EventBus eventBus;
 
-    @Autowired
-    @Bean
-    public OrderCommandHandler orderCommandHandler(AxonConfiguration configuration) {
-        return new OrderCommandHandler(configuration.repository(OrderAggregate.class), eventBus);
-    }
-
-
-
-
+  @Autowired
+  @Bean
+  public OrderCommandHandler orderCommandHandler(AxonConfiguration configuration) {
+    return new OrderCommandHandler(configuration.repository(OrderAggregate.class), eventBus);
+  }
 
 
 }

@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class ChannelIdentityManager {
 
-    private ChannelIdentityRepository repository;
+  private ChannelIdentityRepository repository;
 
-    public ChannelIdentityManager(ChannelIdentityRepository repository) {
-        this.repository = repository;
-    }
+  public ChannelIdentityManager(ChannelIdentityRepository repository) {
+    this.repository = repository;
+  }
 }

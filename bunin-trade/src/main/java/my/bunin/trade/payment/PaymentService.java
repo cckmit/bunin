@@ -9,28 +9,29 @@ import org.springframework.stereotype.Service;
 public class PaymentService {
 
 
-    public void order(Crypt crypt) {
+  /**
+   * create order.
+   */
+  public void order(Crypt crypt) {
 
-        PaymentOrderRequest request = JacksonUtils.readValue(crypt.getMessage(), PaymentOrderRequest.class);
-        checkRequest(crypt, request);
+    PaymentOrderRequest request = JacksonUtils.readValue(crypt.getMessage(),
+        PaymentOrderRequest.class);
+    checkRequest(crypt, request);
 
-        // create payment
+    // create payment
 
-        // execute payment
-
-
-
+    // execute payment
 
 
+  }
+
+  private void checkRequest(Crypt crypt, PaymentOrderRequest request) {
+    if (!crypt.getMerchantNo().equals(request.getMerchantNo())) {
+      throw new IllegalArgumentException(String.format(
+          "merchantNo %s is different from merchantNo %s in message!",
+          crypt.getMerchantNo(), request.getMerchantNo()));
     }
-
-    private void checkRequest(Crypt crypt, PaymentOrderRequest request) {
-        if (!crypt.getMerchantNo().equals(request.getMerchantNo())) {
-            throw new IllegalArgumentException(String.format(
-                    "merchantNo %s is different from merchantNo %s in message!",
-                    crypt.getMerchantNo(), request.getMerchantNo()));
-        }
-    }
+  }
 
 
 }

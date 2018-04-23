@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PaymentOrderManager {
 
-    private PaymentOrderRepository repository;
+  private PaymentOrderRepository repository;
 
-    public PaymentOrderManager(PaymentOrderRepository repository) {
-        this.repository = repository;
-    }
+  public PaymentOrderManager(PaymentOrderRepository repository) {
+    this.repository = repository;
+  }
 }

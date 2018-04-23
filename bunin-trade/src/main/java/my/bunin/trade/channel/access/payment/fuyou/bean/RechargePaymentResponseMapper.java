@@ -10,10 +10,10 @@ import lombok.Setter;
 @XStreamAlias("incomeforrsp")
 public class RechargePaymentResponseMapper {
 
-    @XStreamAlias("ret")
-    private String code;
+  @XStreamAlias("ret")
+  private String code;
 
-    @XStreamAlias("memo")
-    private String message;
+  @XStreamAlias("memo")
+  private String message;
 
 }

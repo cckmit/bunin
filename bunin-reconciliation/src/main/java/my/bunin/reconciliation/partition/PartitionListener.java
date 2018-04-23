@@ -9,18 +9,18 @@ import org.springframework.batch.core.JobExecutionListener;
 public class PartitionListener implements JobExecutionListener {
 
 
-    @Override
-    public void beforeJob(JobExecution jobExecution) {
-    }
+  @Override
+  public void beforeJob(JobExecution jobExecution) {
+  }
 
-    @Override
-    public void afterJob(JobExecution jobExecution) {
+  @Override
+  public void afterJob(JobExecution jobExecution) {
 
-        log.info("job {} completed with: {}",
-                String.format("%s:%s", jobExecution.getJobInstance().getJobName(), jobExecution.getJobId()),
-                DurationFormatUtils.formatPeriod(
-                        jobExecution.getStartTime().getTime(),
-                        jobExecution.getEndTime().getTime(),
-                        "y 'years' M 'months' d 'days' H 'hours' m 'minutes' s 'seconds' S 'milliseconds'"));
-    }
+    log.info("job {} completed with: {}",
+        String.format("%s:%s", jobExecution.getJobInstance().getJobName(), jobExecution.getJobId()),
+        DurationFormatUtils.formatPeriod(
+            jobExecution.getStartTime().getTime(),
+            jobExecution.getEndTime().getTime(),
+            "y 'years' M 'months' d 'days' H 'hours' m 'minutes' s 'seconds' S 'milliseconds'"));
+  }
 }

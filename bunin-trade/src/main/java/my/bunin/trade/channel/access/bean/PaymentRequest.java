@@ -7,8 +7,8 @@ import lombok.Setter;
 @Setter
 public class PaymentRequest extends TransactionRequest {
 
-    public PaymentRequest() {
-        super(RequestType.PAYMENT);
-    }
+  public PaymentRequest() {
+    super(RequestType.PAYMENT);
+  }
 
 }

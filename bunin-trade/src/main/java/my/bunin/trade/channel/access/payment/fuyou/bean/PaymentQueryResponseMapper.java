@@ -14,12 +14,12 @@ import java.util.List;
 @XStreamAlias("qrytransrsp")
 public class PaymentQueryResponseMapper {
 
-    @XStreamAlias("ret")
-    private String code;
+  @XStreamAlias("ret")
+  private String code;
 
-    @XStreamAlias("memo")
-    private String message;
+  @XStreamAlias("memo")
+  private String message;
 
-    @XStreamImplicit
-    private List<TransMapper> transactions = new ArrayList<>();
+  @XStreamImplicit
+  private List<TransMapper> transactions = new ArrayList<>();
 }

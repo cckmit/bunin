@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface Executor {
 
-    <T extends Response> T execute(Request request) throws IOException;
+  <T extends Response> T execute(Request request) throws IOException;
 
 }

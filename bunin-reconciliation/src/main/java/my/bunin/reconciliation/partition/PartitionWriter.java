@@ -9,9 +9,9 @@ import java.util.List;
 @Slf4j
 public class PartitionWriter extends JdbcBatchItemWriter<ListResult> {
 
-    @Override
-    public void write(List<? extends ListResult> items) throws Exception {
-        log.info("writing: {}", items.size());
-        super.write(items);
-    }
+  @Override
+  public void write(List<? extends ListResult> items) throws Exception {
+    log.info("writing: {}", items.size());
+    super.write(items);
+  }
 }

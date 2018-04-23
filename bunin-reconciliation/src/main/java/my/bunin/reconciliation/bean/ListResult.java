@@ -11,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 @ToString
 public class ListResult {
 
-    private String orderNo;
-    private String originStatus;
-    private String targetStatus;
-    private String result;
+  private String orderNo;
+  private String originStatus;
+  private String targetStatus;
+  private String result;
 }

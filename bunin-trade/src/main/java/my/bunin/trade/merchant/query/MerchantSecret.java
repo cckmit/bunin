@@ -10,19 +10,19 @@ import org.springframework.data.annotation.Id;
 @ToString
 public class MerchantSecret {
 
-    @Id
-    private String merchantNo;
+  @Id
+  private String merchantNo;
 
-    private String base64PrivateKey;
+  private String base64PrivateKey;
 
-    private String base64PublicKey;
+  private String base64PublicKey;
 
-    private String base64SecretKey;
+  private String base64SecretKey;
 
-    private String cipherAlgorithm;
+  private String cipherAlgorithm;
 
-    private String secretAlgorithm;
+  private String secretAlgorithm;
 
-    private String signatureAlgorithm;
+  private String signatureAlgorithm;
 
 }

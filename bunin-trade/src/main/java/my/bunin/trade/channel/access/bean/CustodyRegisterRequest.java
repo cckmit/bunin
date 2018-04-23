@@ -9,14 +9,14 @@ import java.math.BigDecimal;
 @Setter
 public class CustodyRegisterRequest extends TransactionRequest {
 
-    public CustodyRegisterRequest() {
-        super(RequestType.CUSTODY_REGISTER);
-    }
+  public CustodyRegisterRequest() {
+    super(RequestType.CUSTODY_REGISTER);
+  }
 
-    private String userRole;
-    private String authList;
-    private String failTime;
-    private BigDecimal amount;
+  private String userRole;
+  private String authList;
+  private String failTime;
+  private BigDecimal amount;
 
 
 }

@@ -9,10 +9,10 @@ import java.time.LocalDateTime;
 @Setter
 public abstract class Response {
 
-    private String code;
-    private String message;
-    private String content;
+  private String code;
+  private String message;
+  private String content;
 
-    private final LocalDateTime createTime = LocalDateTime.now();
+  private final LocalDateTime createTime = LocalDateTime.now();
 
 }

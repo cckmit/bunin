@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class IdentityOrderManager {
 
-    private IdentityOrderRepository repository;
+  private IdentityOrderRepository repository;
 
-    public IdentityOrderManager(IdentityOrderRepository repository) {
-        this.repository = repository;
-    }
+  public IdentityOrderManager(IdentityOrderRepository repository) {
+    this.repository = repository;
+  }
 
 }

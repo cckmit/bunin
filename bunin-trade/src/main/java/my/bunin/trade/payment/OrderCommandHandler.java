@@ -10,17 +10,17 @@ import org.axonframework.eventhandling.EventBus;
 @Slf4j
 public class OrderCommandHandler {
 
-    private Repository<OrderAggregate> repository;
-    private EventBus eventBus;
+  private Repository<OrderAggregate> repository;
+  private EventBus eventBus;
 
-    public OrderCommandHandler(Repository<OrderAggregate> repository, EventBus eventBus) {
-        this.repository = repository;
-        this.eventBus = eventBus;
-    }
+  public OrderCommandHandler(Repository<OrderAggregate> repository, EventBus eventBus) {
+    this.repository = repository;
+    this.eventBus = eventBus;
+  }
 
-    @CommandHandler
-    public void handle(ExecutePaymentOrderCommand command) {
-        Aggregate<OrderAggregate> aggregate = repository.load(command.getId());
-        aggregate.execute(orderAggregate -> orderAggregate.execute(command));
-    }
+  @CommandHandler
+  public void handle(ExecutePaymentOrderCommand command) {
+    Aggregate<OrderAggregate> aggregate = repository.load(command.getId());
+    aggregate.execute(orderAggregate -> orderAggregate.execute(command));
+  }
 }

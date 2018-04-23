@@ -1,8 +1,8 @@
 package my.bunin.core;
 
 public enum TransactionStatus {
-    CREATED,
-    PROCESSING,
-    SUCCEED,
-    FAILED
+  CREATED,
+  PROCESSING,
+  SUCCEED,
+  FAILED
 }

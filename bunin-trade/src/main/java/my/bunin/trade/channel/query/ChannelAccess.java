@@ -11,28 +11,28 @@ import javax.persistence.Id;
 @ToString
 public class ChannelAccess {
 
-    @Id
-    private String channelNo;
+  @Id
+  private String channelNo;
 
-    private String merchantNo;
+  private String merchantNo;
 
-    private String username;
+  private String username;
 
-    private String password;
+  private String password;
 
-    private String baseUrl;
+  private String baseUrl;
 
-    private String notificationUrl;
+  private String notificationUrl;
 
-    private String returnUrl;
+  private String returnUrl;
 
-    private String base64PrivateKey;
+  private String base64PrivateKey;
 
-    private String base64PrivateKeyPassword;
+  private String base64PrivateKeyPassword;
 
-    private String base64PublicKey;
+  private String base64PublicKey;
 
-    private String cipherAlgorithm;
+  private String cipherAlgorithm;
 
-    private String signatureAlgorithm;
+  private String signatureAlgorithm;
 }

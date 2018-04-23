@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BatchPaymentOrderManager {
 
-    private BatchPaymentOrderRepository repository;
+  private BatchPaymentOrderRepository repository;
 
-    public BatchPaymentOrderManager(BatchPaymentOrderRepository repository) {
-        this.repository = repository;
-    }
+  public BatchPaymentOrderManager(BatchPaymentOrderRepository repository) {
+    this.repository = repository;
+  }
 }

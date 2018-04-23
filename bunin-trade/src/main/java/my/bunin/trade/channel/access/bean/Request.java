@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 @Getter
 public abstract class Request {
 
-    private final RequestType type;
+  private final RequestType type;
 
-    @Setter
-    private AccessConfiguration configuration;
+  @Setter
+  private AccessConfiguration configuration;
 
-    private final LocalDateTime createTime = LocalDateTime.now();
+  private final LocalDateTime createTime = LocalDateTime.now();
 
-    public Request(RequestType type) {
-        this.type = type;
-    }
+  public Request(RequestType type) {
+    this.type = type;
+  }
 }

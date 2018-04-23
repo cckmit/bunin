@@ -1,4 +1,3 @@
-
 buildscript {
     ext.dependencyPluginVersion = '1.0.3.RELEASE'
     ext.springBootVersion = '1.5.11.RELEASE'

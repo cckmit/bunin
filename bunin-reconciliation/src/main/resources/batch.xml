@@ -13,7 +13,7 @@
     </bean>
 
     <bean id="incrementer" class="org.springframework.batch.core.launch.support.RunIdIncrementer"/>
-    
+
     <batch:job id="partitionJob" incrementer="incrementer">
         <batch:step id="step">
             <batch:partition step="partitionStep" partitioner="partitioner">
@@ -35,7 +35,8 @@
 
     <batch:step id="partitionStep">
         <batch:tasklet>
-            <batch:chunk reader="partitionReader" processor="partitionProcessor" writer="partitionWriter" commit-interval="100000"/>
+            <batch:chunk reader="partitionReader" processor="partitionProcessor" writer="partitionWriter"
+                         commit-interval="100000"/>
         </batch:tasklet>
         <batch:listeners>
             <batch:listener>
@@ -46,7 +47,7 @@
 
     <!-- scope must be step when using stepExecutionContext -->
     <bean id="partitionReader" scope="step" autowire-candidate="false" parent="partitionReaderParent">
-        <property name="resource" value="#{stepExecutionContext[fileName]}"/>
+        <property name="resource" value="#{stepExecutionContext['fileName']}"/>
     </bean>
 
     <bean id="partitionReaderParent" class="org.springframework.batch.item.file.FlatFileItemReader" abstract="true">
@@ -71,7 +72,8 @@
 
     <bean id="partitionWriter" class="my.bunin.reconciliation.partition.PartitionWriter" scope="step">
         <property name="dataSource" ref="dataSource"/>
-        <property name="sql" value="insert into list_result (order_no, origin_status, target_status, result) values( :orderNo, :originStatus, :targetStatus, :result)"/>
+        <property name="sql"
+                  value="insert into list_result (order_no, origin_status, target_status, result) values( :orderNo, :originStatus, :targetStatus, :result)"/>
         <property name="itemSqlParameterSourceProvider">
             <bean class="org.springframework.batch.item.database.BeanPropertyItemSqlParameterSourceProvider"/>
         </property>

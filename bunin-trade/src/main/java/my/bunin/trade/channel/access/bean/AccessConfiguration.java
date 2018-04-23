@@ -12,19 +12,19 @@ import java.util.Map;
 @Setter
 public class AccessConfiguration {
 
-    private String merchantNo;
-    private String username;
-    private String password;
-    private String baseUrl;
-    private String notificationUrl;
-    private String returnUrl;
-    private String base64PrivateKey;
-    private String base64PrivateKeyPassword;
-    private String base64PublicKey;
-    private String cipherAlgorithm;
-    private String signatureAlgorithm;
+  private String merchantNo;
+  private String username;
+  private String password;
+  private String baseUrl;
+  private String notificationUrl;
+  private String returnUrl;
+  private String base64PrivateKey;
+  private String base64PrivateKeyPassword;
+  private String base64PublicKey;
+  private String cipherAlgorithm;
+  private String signatureAlgorithm;
 
-    private Map<BankAcronym, String> bankNoMapper = new HashMap<>();
-    private Map<CertType, String> certTypeMapper = new HashMap<>();
+  private Map<BankAcronym, String> bankNoMapper = new HashMap<>();
+  private Map<CertType, String> certTypeMapper = new HashMap<>();
 
 }

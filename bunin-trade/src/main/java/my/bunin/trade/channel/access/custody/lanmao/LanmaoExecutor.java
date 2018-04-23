@@ -17,33 +17,33 @@ import java.io.IOException;
 @Slf4j
 public class LanmaoExecutor extends AbstractExecutor {
 
-    private HttpClient client;
+  private HttpClient client;
 
-    public LanmaoExecutor(HttpClient client) {
-        this.client = client;
-    }
+  public LanmaoExecutor(HttpClient client) {
+    this.client = client;
+  }
 
-    @Override
-    public <T extends Response> T execute(Request request) throws IOException {
-        String requestContent = format(request);
+  @Override
+  public <T extends Response> T execute(Request request) throws IOException {
+    String requestContent = format(request);
 
-        HttpResponse httpResponse = doExecute(request, requestContent);
+    HttpResponse httpResponse = doExecute(request, requestContent);
 
-        String responseContent = EntityUtils.toString(httpResponse.getEntity(), StringUtils.UTF8);
+    String responseContent = EntityUtils.toString(httpResponse.getEntity(), StringUtils.UTF8);
 
-        //noinspection unchecked
-        return (T)parse(request, responseContent);
-    }
+    //noinspection unchecked
+    return (T) parse(request, responseContent);
+  }
 
-    @Override
-    protected String format(CustodyRegisterRequest request) {
-        return null;
+  @Override
+  protected String format(CustodyRegisterRequest request) {
+    return null;
 
-    }
+  }
 
-    private HttpResponse doExecute(Request request, String requestContent) throws IOException {
-        HttpPost httpPost = new HttpPost(request.getConfiguration().getBaseUrl());
-        httpPost.setEntity(new StringEntity(requestContent, StringUtils.UTF8));
-        return client.execute(httpPost);
-    }
+  private HttpResponse doExecute(Request request, String requestContent) throws IOException {
+    HttpPost httpPost = new HttpPost(request.getConfiguration().getBaseUrl());
+    httpPost.setEntity(new StringEntity(requestContent, StringUtils.UTF8));
+    return client.execute(httpPost);
+  }
 }

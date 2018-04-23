@@ -10,22 +10,22 @@ import lombok.Setter;
 @XStreamAlias("qrytransreq")
 public class PaymentQueryRequestMapper {
 
-    @XStreamAlias("ver")
-    private String version;
+  @XStreamAlias("ver")
+  private String version;
 
-    @XStreamAlias("busicd")
-    private String businessCode;
+  @XStreamAlias("busicd")
+  private String businessCode;
 
-    @XStreamAlias("orderno")
-    private String orderNo;
+  @XStreamAlias("orderno")
+  private String orderNo;
 
-    @XStreamAlias("startdt")
-    private String startDate;
+  @XStreamAlias("startdt")
+  private String startDate;
 
-    @XStreamAlias("enddt")
-    private String endDate;
+  @XStreamAlias("enddt")
+  private String endDate;
 
-    @XStreamAlias("transst")
-    private String transactionStatus;
+  @XStreamAlias("transst")
+  private String transactionStatus;
 
 }
